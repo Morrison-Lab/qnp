@@ -685,7 +685,7 @@
     "href": "CITATION.html",
     "title": "Citation",
     "section": "",
-    "text": "Citation\nTo cite package ‘qnp’ in publications use:\n\nMorrison D (2026). qnp: Plots for Quarto Notes. R package version 0.0.0.9000, https://github.com/Morrison-Lab/qnp.",
+    "text": "Citation\nTo cite package ‘qnp’ in publications use:\n\nMorrison D (2026). qnp: Plots for Quarto Notes. R package version 1.0.2.9005, https://github.com/Morrison-Lab/qnp.",
     "crumbs": [
       "Documentation",
       "Citation"
