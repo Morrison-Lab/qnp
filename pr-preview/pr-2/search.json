@@ -738,9 +738,9 @@
   {
     "objectID": "NEWS.html",
     "href": "NEWS.html",
-    "title": "qnp (development version)",
+    "title": "qnp 1.0.2.9005",
     "section": "",
-    "text": "qnp (development version)\n\nCreated {qnp} (“quarto-notes plots”) from the Morrison-Lab/rpt package template.\nAdded interactive_plot(), which renders a {ggplot2} plot as an interactive {plotly} widget with a text alternative (alt) in HTML output, and returns the plot unchanged in other output formats.",
+    "text": "qnp 1.0.2.9005\n\nCreated {qnp} (“quarto-notes plots”) from the Morrison-Lab/rpt package template.\nAdded interactive_plot(), which renders a {ggplot2} plot as an interactive {plotly} widget with a text alternative (alt) in HTML output, and returns the plot unchanged in other output formats.",
     "crumbs": [
       "Documentation",
       "News"
