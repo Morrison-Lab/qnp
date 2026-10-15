@@ -16,8 +16,10 @@
 #' @param plot
 #' A [ggplot2][ggplot2::ggplot] plot object.
 #' @param alt
-#' A string giving the text alternative (alt text) for the plot.
-#' Only used in HTML output.
+#' A single non-empty string giving the text alternative (alt text)
+#' for the plot.
+#' Checked in every output format,
+#' so a missing alt text fails the render of the PDF handout too.
 #' @param is_html
 #' Whether the current output format is HTML.
 #' Defaults to [knitr::is_html_output()],
@@ -53,6 +55,8 @@ interactive_plot <- function(
   alt,
   is_html = knitr::is_html_output()
 ) {
+  .validate_alt(alt)
+
   if (!is_html) {
     return(plot)
   }
