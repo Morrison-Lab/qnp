@@ -31,15 +31,8 @@ website:
     right:
       - text: Versions
         menu:
-          - text: "v1.0.2 (stable)"
-            href: https://Morrison-Lab.github.io/rpt/latest-tag/
           - text: "1.0.2.9004 (dev)"
-            href: https://Morrison-Lab.github.io/rpt/dev/
-          - text: "---"
-          - text: "v1.0.1"
-            href: https://Morrison-Lab.github.io/rpt/v1.0.1/
-          - text: "v1.0.0"
-            href: https://Morrison-Lab.github.io/rpt/v1.0.0/
+            href: https://Morrison-Lab.github.io/qnp/dev/
       - icon: github
         href: $ALTDOC_PACKAGE_URL_GITHUB
         aria-label: $ALTDOC_PACKAGE_NAME GitHub
