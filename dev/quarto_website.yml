@@ -20,7 +20,7 @@ website:
   # the navbar GitHub icon's `href` below, and inserts `repo-branch` (absent
   # here; added dynamically), so "Edit this page" / "View source" / the navbar
   # GitHub link point at the PR branch and PR conversation page, not main.
-  repo-url: https://github.com/UCD-SERG/rpt
+  repo-url: https://github.com/Morrison-Lab/qnp
   # The `issue` action's URL is derived from `repo-url`; because the PR-preview
   # rewrite repoints `repo-url`, docs.yaml repoints the rendered "Report an
   # issue" link at the base repo's main issues page after rendering.
@@ -31,14 +31,14 @@ website:
     right:
       - text: Versions
         menu:
-          - text: "1.0.2.9004 (dev)"
+          - text: "1.0.2.9005 (dev)"
             href: https://Morrison-Lab.github.io/qnp/dev/
       - icon: github
         href: $ALTDOC_PACKAGE_URL_GITHUB
         aria-label: $ALTDOC_PACKAGE_NAME GitHub
     left:
       - text: Documentation
-        file: man/rpt-package.qmd
+        file: man/qnp-package.qmd
       - text: Articles
         menu:
           - text: "Getting started"
@@ -47,8 +47,6 @@ website:
             file: vignettes/quarto_vignette.qmd
           - text: "Advanced"
             file: vignettes/articles/quarto_article.qmd
-          - text: "Package Structure"
-            file: vignettes/articles/package-structure.qmd
   sidebar:
     collapse-level: 1
     contents:
@@ -63,7 +61,6 @@ website:
           - section: Advanced
             contents:
               - vignettes/articles/quarto_article.qmd
-              - vignettes/articles/package-structure.qmd
       - section: $ALTDOC_MAN_BLOCK
         style: floating
       - text: News
