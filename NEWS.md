@@ -1,4 +1,4 @@
-# qnp (development version)
+# qnp 1.0.2.9005
 
 * Created `{qnp}` ("quarto-notes plots") from the
   [`Morrison-Lab/rpt`](https://github.com/Morrison-Lab/rpt) package template.
