@@ -59,3 +59,16 @@ test_that("interactive_plot() defaults is_html to knitr::is_html_output()", {
     "shiny.tag"
   )
 })
+
+test_that("interactive_plot() errors on a missing or empty alt", {
+  skip_if_not_installed("ggplot2")
+
+  p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
+    ggplot2::geom_point()
+
+  expect_error(interactive_plot(plot = p, is_html = FALSE), "alt")
+  expect_error(interactive_plot(plot = p, alt = "", is_html = FALSE), "alt")
+  expect_error(interactive_plot(plot = p, alt = "  ", is_html = TRUE), "alt")
+  expect_error(interactive_plot(plot = p, alt = NA_character_), "alt")
+  expect_error(interactive_plot(plot = p, alt = c("a", "b")), "alt")
+})
