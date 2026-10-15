@@ -1,0 +1,26 @@
+# rpt
+
+> What the Package Does (One Line, Title Case)
+
+## Reference
+
+- [calculate_summary()](https://d-morrison.github.io/rpt/man/calculate_summary.html): Calculate Summary Statistics
+- [example_function()](https://d-morrison.github.io/rpt/man/example_function.html): Example Function with Mathematical Notation
+- [rpt-package](https://d-morrison.github.io/rpt/man/rpt-package.html): rpt: What the Package Does (One Line, Title Case)
+
+## Articles
+
+- [Check if we're rendering to a format that supports HTML widgets](https://d-morrison.github.io/rpt/vignettes/articles/package-structure.html)
+- [Generate sample data](https://d-morrison.github.io/rpt/vignettes/articles/quarto_article.html)
+- [Example usage](https://d-morrison.github.io/rpt/vignettes/getting-started.html)
+- [CONTRIBUTING](https://d-morrison.github.io/rpt/vignettes/macros/CONTRIBUTING.html)
+- [README](https://d-morrison.github.io/rpt/vignettes/macros/README.html)
+- [Register the macros with pandoc's static math parser (texmath).](https://d-morrison.github.io/rpt/vignettes/macros/demo-include-in-header.html)
+- [Demo-Shortcode](https://d-morrison.github.io/rpt/vignettes/macros/demo-shortcode.html)
+- [0001-macros-submodule-versioning](https://d-morrison.github.io/rpt/vignettes/macros/docs/adr/0001-macros-submodule-versioning.html)
+- [README](https://d-morrison.github.io/rpt/vignettes/macros/docs/adr/README.html)
+- [Index](https://d-morrison.github.io/rpt/vignettes/macros/index.html)
+- [Embed macro definitions in a hidden Quarto fenced-div so pandoc processes](https://d-morrison.github.io/rpt/vignettes/macros/macros-table.html)
+- [Macros](https://d-morrison.github.io/rpt/vignettes/macros/macros.html)
+- [Create some sample data](https://d-morrison.github.io/rpt/vignettes/quarto_vignette.html)
+
