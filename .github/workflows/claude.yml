@@ -1,0 +1,86 @@
+name: Claude Code
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  issues:
+    types: [opened, assigned]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  claude:
+    if: |
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
+      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: read
+      id-token: write
+      actions: read # Required for Claude to read CI results on PRs
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Remove review request from d-morrison while Claude is working
+        id: remove_reviewer
+        if: github.event.pull_request.number || github.event.issue.pull_request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number || github.event.issue.number }}"
+          # On any GET error / empty response, treat as "not a reviewer" so
+          # both the DELETE below and the matching re-request step skip,
+          # leaving the PR state untouched rather than partially modified.
+          HAD_REVIEWER=$(gh api "repos/${{ github.repository }}/pulls/$PR_NUMBER" \
+            --jq '[.requested_reviewers[].login] | any(. == "d-morrison")' \
+            2>/dev/null) || HAD_REVIEWER=false
+          if [ -z "$HAD_REVIEWER" ]; then HAD_REVIEWER=false; fi
+          echo "had_reviewer=$HAD_REVIEWER" >> "$GITHUB_OUTPUT"
+          if [ "$HAD_REVIEWER" = "true" ]; then
+            gh api -X DELETE \
+              "repos/${{ github.repository }}/pulls/$PR_NUMBER/requested_reviewers" \
+              -f "reviewers[]=d-morrison" \
+              || echo "::warning::failed to remove d-morrison from reviewers on PR #$PR_NUMBER"
+          fi
+
+      - name: Run Claude Code
+        id: claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+
+          # This is an optional setting that allows Claude to read CI results on PRs
+          additional_permissions: |
+            actions: read
+
+          # Optional: Give a custom prompt to Claude. If this is not specified, Claude will perform the instructions specified in the comment that tagged it.
+          # prompt: 'Update the pull request description to include a summary of changes.'
+
+          # Optional: Add claude_args to customize behavior and configuration
+          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
+          # or https://code.claude.com/docs/en/cli-reference for available options
+          # claude_args: '--allowed-tools Bash(gh pr *)'
+
+      - name: Re-request review from d-morrison when Claude finishes
+        if: |
+          always() &&
+          (github.event.pull_request.number || github.event.issue.pull_request) &&
+          steps.remove_reviewer.outputs.had_reviewer == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number || github.event.issue.number }}"
+          gh api -X POST \
+            "repos/${{ github.repository }}/pulls/$PR_NUMBER/requested_reviewers" \
+            -f "reviewers[]=d-morrison" \
+            || echo "::warning::failed to re-request d-morrison as reviewer on PR #$PR_NUMBER"
+

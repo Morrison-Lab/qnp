@@ -1,0 +1,260 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+# Deploys altdoc for Pull Requests, releases, and pushes to main branch.
+# PRs are deployed to /preview/pr<number>/
+# Main branch is deployed to /dev/ (development docs)
+# Releases are deployed to / (stable docs)
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+    # uncomment the following lines to restrict when this workflow runs:
+    # paths:
+    #   - 'man/**'
+    #   - 'altdoc/**'
+    #   - 'vignettes/**'
+    #   - '_quarto.yml'
+    #   - '.github/workflows/docs.yaml'
+    #   - 'README.md'
+    #   - 'index.qmd'
+  push:
+    branches:
+      - main
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Documentation version to deploy
+        required: true
+        default: dev
+        type: choice
+        options:
+          - dev
+          - stable
+
+name: docs
+
+env:
+    PREVIEW_BRANCH: gh-pages
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    if: ${{ !(github.event_name == 'pull_request' && github.event.action == 'closed') }}
+    timeout-minutes: 30
+    # Only restrict concurrency for non-PR jobs
+    concurrency:
+      group: docs-${{ github.event_name != 'pull_request' || github.run_id }}
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          # fetch-depth: 0 fetches all history and tags, which the version
+          # dropdown script needs to discover all release tags
+          fetch-depth: 0
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: true
+
+      - name: Set up Julia
+        uses: julia-actions/setup-julia@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Install R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          needs: |
+            connect
+            website
+          extra-packages: |
+            d-morrison/altdoc@recursive-qmd-search
+            quarto-dev/quarto-r
+            any::sessioninfo
+            local::.
+
+      # Verify development environment is properly configured
+      - name: Verify development environment
+        shell: bash
+        run: |
+          echo "=== Development Environment Status ==="
+          export QUARTO_LOG_LEVEL=DEBUG
+          # Check R installation
+          Rscript -e 'cat("R version:", R.version.string, "\n")'
+
+          # Verify Quarto is installed and working
+          echo ""
+          echo "=== Quarto Status ==="
+          quarto --version
+          quarto check
+
+          echo ""
+          echo "Development environment setup complete!"
+
+      - name: Generate version dropdown
+        run: python3 .github/scripts/generate_version_dropdown.py
+
+      # On PR-preview builds, redirect quarto's "Edit this page" / "View
+      # source" links to the PR head branch and the navbar GitHub icon to the
+      # PR conversation page, so reviewers can click straight to the right
+      # place. Non-PR builds leave the YAML alone. See issue #136.
+      #
+      # Must run AFTER `Generate version dropdown` — that script rewrites the
+      # navbar Versions block in-place. It currently leaves the `icon: github`
+      # entry untouched, but if its scope ever expanded to the whole navbar,
+      # the assertion below would catch the regression.
+      - name: Rewrite quarto repo links for PR preview
+        if: github.event_name == 'pull_request'
+        env:
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: |
+          # Preconditions: confirm the YAML still has the shape we're about
+          # to mutate. yq -i would happily *create* `.website.repo-url` if
+          # someone renamed the top-level key to (say) `site:`, leaving the
+          # real settings untouched and the postcondition check below
+          # passing green. Catch that here before we write anything.
+          yq -e '.website | has("repo-url")' altdoc/quarto_website.yml >/dev/null \
+            || { echo "::error::altdoc/quarto_website.yml has no .website.repo-url — schema may have changed; rewrite would silently create a misplaced key"; exit 1; }
+          yq -e '.website.navbar.right[] | select(.icon == "github")' altdoc/quarto_website.yml >/dev/null \
+            || { echo "::error::altdoc/quarto_website.yml has no navbar entry with icon: github — rewrite would silently no-op"; exit 1; }
+
+          yq -i '.website."repo-url" = "https://github.com/" + strenv(HEAD_REPO)' altdoc/quarto_website.yml
+          yq -i '.website."repo-branch" = strenv(HEAD_REF)' altdoc/quarto_website.yml
+          yq -i '(.website.navbar.right[] | select(.icon == "github")).href = strenv(PR_URL)' altdoc/quarto_website.yml
+
+          # Postcondition: confirm each rewrite produced the expected value.
+          ACTUAL_REPO_URL=$(yq '.website."repo-url"' altdoc/quarto_website.yml)
+          ACTUAL_BRANCH=$(yq '.website."repo-branch"' altdoc/quarto_website.yml)
+          ACTUAL_NAV_HREF=$(yq '.website.navbar.right[] | select(.icon == "github") | .href' altdoc/quarto_website.yml)
+          EXPECTED_REPO_URL="https://github.com/$HEAD_REPO"
+          if [[ "$ACTUAL_REPO_URL" != "$EXPECTED_REPO_URL" || "$ACTUAL_BRANCH" != "$HEAD_REF" || "$ACTUAL_NAV_HREF" != "$PR_URL" ]]; then
+            echo "::error::PR-preview link rewrite did not produce the expected values"
+            echo "  repo-url:    got '$ACTUAL_REPO_URL'    expected '$EXPECTED_REPO_URL'"
+            echo "  repo-branch: got '$ACTUAL_BRANCH'    expected '$HEAD_REF'"
+            echo "  nav href:    got '$ACTUAL_NAV_HREF' expected '$PR_URL'"
+            exit 1
+          fi
+
+      - name: Build site
+        # uncomment the next two lines to get full debugging output
+        # env:
+          # QUARTO_LOG_LEVEL: DEBUG
+        timeout-minutes: 20
+        run: |
+          # If parallel = TRUE in render_docs()
+          # future::plan(future::multicore)
+          # sessioninfo::session_info() # already done in Install R dependencies
+          altdoc::render_docs(verbose = TRUE, parallel = FALSE, freeze = FALSE)
+        shell: Rscript {0}
+
+      # Quarto's `issue` repo-action derives its URL from `repo-url`, which the
+      # PR-preview step above repoints at the PR head repo/branch — so the
+      # rendered "Report an issue" link would otherwise land on the fork (and on
+      # the /issues/new form). Repoint it at the base repository's main issues
+      # page so it's stable across dev, release, and PR-preview builds.
+      - name: Point "Report an issue" links at the repo issues page
+        env:
+          ISSUES_URL: https://github.com/${{ github.repository }}/issues
+        run: |
+          find docs -name '*.html' -exec \
+            sed -i -E 's#href="https://github\.com/[^"]*/issues/new[^"]*"#href="'"$ISSUES_URL"'"#g' {} +
+          echo "Repointed 'Report an issue' links to $ISSUES_URL"
+
+      # If event is workflow_dispatch with stable selected, deploy to root
+      - name: '[dispatch stable] Set documentation subdirectory to root'
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.version == 'stable'
+        run: |
+          echo "subdir=" >> $GITHUB_ENV
+
+      # If event is workflow_dispatch with dev selected, deploy to /dev/
+      - name: '[dispatch dev] Set documentation subdirectory to /dev/'
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.version == 'dev'
+        run: |
+          echo "subdir=dev" >> $GITHUB_ENV
+
+      # If event is a release, deploy stable docs to root
+      - name: "[release] Set documentation subdirectory to root"
+        if: github.event_name == 'release'
+        run: |
+          echo "subdir=" >> $GITHUB_ENV
+
+      # If event is a push to main, deploy development docs to /dev/
+      - name: "[main] Set documentation subdirectory to /dev/"
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "subdir=dev" >> $GITHUB_ENV
+
+      - name: Debug subdir
+        run: |
+          echo "Subdir is set to: ${{ env.subdir }}"
+
+      - name: Deploy to GitHub pages 🚀
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          clean-exclude: |
+            pr-preview
+            dev
+            v[0-9]*
+          branch: gh-pages # potentially different from ${{ env.PREVIEW_BRANCH }}
+          folder: docs
+          target-folder: ${{ env.subdir }}
+
+      # On release, also deploy docs to a versioned subdirectory (e.g. /v1.0.0/)
+      # so previous releases remain accessible after future releases overwrite root.
+      - name: "[release] Deploy to version subdirectory"
+        if: github.event_name == 'release'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          clean: false
+          branch: gh-pages
+          folder: docs
+          target-folder: ${{ github.ref_name }}
+
+      - name: Deploy PR Preview
+        id: preview-step
+        if: github.event_name == 'pull_request'
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: docs
+          preview-branch: ${{ env.PREVIEW_BRANCH }}
+          comment: "false"
+          wait-for-pages-deployment: false
+
+      # following https://github.com/rossjrw/pr-preview-action?tab=readme-ov-file#customise-the-sticky-comment:
+      - uses: marocchino/sticky-pull-request-comment@v2
+        if: steps.preview-step.outputs.deployment-action == 'deploy' && env.deployment_status == 'success'
+        with:
+          header: pr-preview
+          recreate: true
+          message: |
+              [PR Preview Action](https://github.com/rossjrw/pr-preview-action) ${{ steps.preview-step.outputs.action-version }}
+              :---:
+              | <p><img src="https://qr.rossjrw.com/?url=${{ steps.preview-step.outputs.preview-url }}" height="100" align="right" alt="QR code for preview link"></p> :rocket: View preview at <br> ${{ steps.preview-step.outputs.preview-url }} <br><br>
+              | <h6>Built to branch [`${{ env.PREVIEW_BRANCH }}`](${{ github.server_url }}/${{ github.repository }}/tree/${{ env.PREVIEW_BRANCH }}) at ${{ steps.preview-step.outputs.action-start-time }}. <br> Preview will be ready when the [GitHub Pages deployment](${{ github.server_url }}/${{ github.repository }}/deployments) is complete. <br><br> </h6>
+
+      - uses: marocchino/sticky-pull-request-comment@v2
+        if: steps.preview-step.outputs.deployment-action == 'remove' && env.deployment_status == 'success'
+        with:
+            header: pr-preview
+            message: |
+                [PR Preview Action](https://github.com/rossjrw/pr-preview-action) ${{ steps.preview-step.outputs.action-version }}
+                :---:
+                Preview removed because the pull request was closed.
+                ${{ steps.preview-step.outputs.action-start-time }}

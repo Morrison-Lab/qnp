@@ -1,0 +1,82 @@
+name: Claude Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review, reopened]
+    # Optional: Only run on specific file changes
+    # paths:
+    #   - "src/**/*.ts"
+    #   - "src/**/*.tsx"
+    #   - "src/**/*.js"
+    #   - "src/**/*.jsx"
+
+jobs:
+  claude-review:
+    # Optional: Filter by PR author
+    # if: |
+    #   github.event.pull_request.user.login == 'external-contributor' ||
+    #   github.event.pull_request.user.login == 'new-developer' ||
+    #   github.event.pull_request.author_association == 'FIRST_TIME_CONTRIBUTOR'
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: read
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      # Skip reviewer toggling on fork PRs: GitHub downgrades GITHUB_TOKEN
+      # to read-only for fork events even when `pull-requests: write` is
+      # declared, so the DELETE / POST below would 403. The job-level
+      # reviewer (Run Claude Code Review) still runs because it uses its
+      # own OAuth token.
+      - name: Remove review request from d-morrison while Claude is reviewing
+        id: remove_reviewer
+        if: |
+          github.event.pull_request.number &&
+          github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HAD_REVIEWER: ${{ contains(github.event.pull_request.requested_reviewers.*.login, 'd-morrison') }}
+        run: |
+          echo "had_reviewer=$HAD_REVIEWER" >> "$GITHUB_OUTPUT"
+          if [ "$HAD_REVIEWER" = "true" ]; then
+            gh api -X DELETE \
+              "repos/${{ github.repository }}/pulls/$PR_NUMBER/requested_reviewers" \
+              -f "reviewers[]=d-morrison" \
+              || echo "::warning::failed to remove d-morrison from reviewers on PR #$PR_NUMBER"
+          fi
+
+      - name: Run Claude Code Review
+        id: claude-review
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
+          plugins: 'code-review@claude-code-plugins'
+          prompt: '/code-review:code-review ${{ github.repository }}/pull/${{ github.event.pull_request.number }}'
+          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
+          # or https://code.claude.com/docs/en/cli-reference for available options
+
+      - name: Re-request review from d-morrison when Claude finishes reviewing
+        if: |
+          always() &&
+          github.event.pull_request.number &&
+          github.event.pull_request.head.repo.full_name == github.repository &&
+          steps.remove_reviewer.outputs.had_reviewer == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh api -X POST \
+            "repos/${{ github.repository }}/pulls/$PR_NUMBER/requested_reviewers" \
+            -f "reviewers[]=d-morrison" \
+            || echo "::warning::failed to re-request d-morrison as reviewer on PR #$PR_NUMBER"
+
