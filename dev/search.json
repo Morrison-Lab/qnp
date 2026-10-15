@@ -513,7 +513,7 @@
     "href": "man/interactive_plot.html",
     "title": "qnp",
     "section": "",
-    "text": "Wraps a ggplot2 plot so that it is interactive in HTML output (via plotly::ggplotly()) and unchanged in all other output formats, such as PDF or Word.\n\ninteractive_plot(plot, alt, is_html = knitr::is_html_output())\n\n\n\n\n\nplot\n\n\nA ggplot2 plot object.\n\n\n\n\nalt\n\n\nA string giving the text alternative (alt text) for the plot. Only used in HTML output.\n\n\n\n\nis_html\n\n\nWhether the current output format is HTML. Defaults to knitr::is_html_output(), which detects the format of the document being rendered.\n\n\n\nIn HTML output, the interactive plot is placed inside a &lt;div&gt; with role = “img” and aria-label = alt, so that screen readers announce the plot as a single image with the text alternative alt, rather than traversing the internals of the plotly widget.\n\nIf is_html is FALSE, plot, unchanged. Otherwise, an htmltools::div() tag containing the interactive plotly widget.\n\n\nCodelibrary(\"qnp\")\n\n\np &lt;- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +\n  ggplot2::geom_point()\n\n# non-HTML output: the ggplot is returned unchanged\ninteractive_plot(\n  plot = p,\n  alt = \"Scatterplot of fuel economy versus car weight\",\n  is_html = FALSE\n)\n\n\n\n\n\n\nCode# HTML output: an interactive widget wrapped in an accessible `div`\ninteractive_plot(\n  plot = p,\n  alt = \"Scatterplot of fuel economy versus car weight\",\n  is_html = TRUE\n)",
+    "text": "Wraps a ggplot2 plot so that it is interactive in HTML output (via plotly::ggplotly()) and unchanged in all other output formats, such as PDF or Word.\n\ninteractive_plot(plot, alt, is_html = knitr::is_html_output())\n\n\n\n\n\nplot\n\n\nA ggplot2 plot object.\n\n\n\n\nalt\n\n\nA single non-empty string giving the text alternative (alt text) for the plot. Checked in every output format, so a missing alt text fails the render of the PDF handout too.\n\n\n\n\nis_html\n\n\nWhether the current output format is HTML. Defaults to knitr::is_html_output(), which detects the format of the document being rendered.\n\n\n\nIn HTML output, the interactive plot is placed inside a &lt;div&gt; with role = “img” and aria-label = alt, so that screen readers announce the plot as a single image with the text alternative alt, rather than traversing the internals of the plotly widget.\n\nIf is_html is FALSE, plot, unchanged. Otherwise, an htmltools::div() tag containing the interactive plotly widget.\n\n\nCodelibrary(\"qnp\")\n\n\np &lt;- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +\n  ggplot2::geom_point()\n\n# non-HTML output: the ggplot is returned unchanged\ninteractive_plot(\n  plot = p,\n  alt = \"Scatterplot of fuel economy versus car weight\",\n  is_html = FALSE\n)\n\n\n\n\n\n\nCode# HTML output: an interactive widget wrapped in an accessible `div`\ninteractive_plot(\n  plot = p,\n  alt = \"Scatterplot of fuel economy versus car weight\",\n  is_html = TRUE\n)",
     "crumbs": [
       "Documentation",
       "Reference",
@@ -525,7 +525,7 @@
     "href": "man/interactive_plot.html#make-a-plot-interactive-in-html-output",
     "title": "qnp",
     "section": "",
-    "text": "Wraps a ggplot2 plot so that it is interactive in HTML output (via plotly::ggplotly()) and unchanged in all other output formats, such as PDF or Word.\n\ninteractive_plot(plot, alt, is_html = knitr::is_html_output())\n\n\n\n\n\nplot\n\n\nA ggplot2 plot object.\n\n\n\n\nalt\n\n\nA string giving the text alternative (alt text) for the plot. Only used in HTML output.\n\n\n\n\nis_html\n\n\nWhether the current output format is HTML. Defaults to knitr::is_html_output(), which detects the format of the document being rendered.\n\n\n\nIn HTML output, the interactive plot is placed inside a &lt;div&gt; with role = “img” and aria-label = alt, so that screen readers announce the plot as a single image with the text alternative alt, rather than traversing the internals of the plotly widget.\n\nIf is_html is FALSE, plot, unchanged. Otherwise, an htmltools::div() tag containing the interactive plotly widget.\n\n\nCodelibrary(\"qnp\")\n\n\np &lt;- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +\n  ggplot2::geom_point()\n\n# non-HTML output: the ggplot is returned unchanged\ninteractive_plot(\n  plot = p,\n  alt = \"Scatterplot of fuel economy versus car weight\",\n  is_html = FALSE\n)\n\n\n\n\n\n\nCode# HTML output: an interactive widget wrapped in an accessible `div`\ninteractive_plot(\n  plot = p,\n  alt = \"Scatterplot of fuel economy versus car weight\",\n  is_html = TRUE\n)",
+    "text": "Wraps a ggplot2 plot so that it is interactive in HTML output (via plotly::ggplotly()) and unchanged in all other output formats, such as PDF or Word.\n\ninteractive_plot(plot, alt, is_html = knitr::is_html_output())\n\n\n\n\n\nplot\n\n\nA ggplot2 plot object.\n\n\n\n\nalt\n\n\nA single non-empty string giving the text alternative (alt text) for the plot. Checked in every output format, so a missing alt text fails the render of the PDF handout too.\n\n\n\n\nis_html\n\n\nWhether the current output format is HTML. Defaults to knitr::is_html_output(), which detects the format of the document being rendered.\n\n\n\nIn HTML output, the interactive plot is placed inside a &lt;div&gt; with role = “img” and aria-label = alt, so that screen readers announce the plot as a single image with the text alternative alt, rather than traversing the internals of the plotly widget.\n\nIf is_html is FALSE, plot, unchanged. Otherwise, an htmltools::div() tag containing the interactive plotly widget.\n\n\nCodelibrary(\"qnp\")\n\n\np &lt;- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +\n  ggplot2::geom_point()\n\n# non-HTML output: the ggplot is returned unchanged\ninteractive_plot(\n  plot = p,\n  alt = \"Scatterplot of fuel economy versus car weight\",\n  is_html = FALSE\n)\n\n\n\n\n\n\nCode# HTML output: an interactive widget wrapped in an accessible `div`\ninteractive_plot(\n  plot = p,\n  alt = \"Scatterplot of fuel economy versus car weight\",\n  is_html = TRUE\n)",
     "crumbs": [
       "Documentation",
       "Reference",
@@ -685,7 +685,7 @@
     "href": "CITATION.html",
     "title": "Citation",
     "section": "",
-    "text": "Citation\nTo cite package ‘qnp’ in publications use:\n\nMorrison D (2026). qnp: Plots for Quarto Notes. R package version 1.0.2.9005, https://github.com/Morrison-Lab/qnp.",
+    "text": "Citation\nTo cite package ‘qnp’ in publications use:\n\nMorrison D (2026). qnp: Plots for Quarto Notes. R package version 1.0.2.9006, https://github.com/Morrison-Lab/qnp.",
     "crumbs": [
       "Documentation",
       "Citation"
@@ -738,9 +738,9 @@
   {
     "objectID": "NEWS.html",
     "href": "NEWS.html",
-    "title": "qnp 1.0.2.9005",
+    "title": "qnp 1.0.2.9006",
     "section": "",
-    "text": "qnp 1.0.2.9005\n\nCreated {qnp} (“quarto-notes plots”) from the Morrison-Lab/rpt package template.\nAdded interactive_plot(), which renders a {ggplot2} plot as an interactive {plotly} widget with a text alternative (alt) in HTML output, and returns the plot unchanged in other output formats.",
+    "text": "qnp 1.0.2.9006\n\ninteractive_plot() now errors if alt is missing, empty, or not a single string, in every output format, so a figure cannot ship without alt text.\n\n\n\nqnp 1.0.2.9005\n\nCreated {qnp} (“quarto-notes plots”) from the Morrison-Lab/rpt package template.\nAdded interactive_plot(), which renders a {ggplot2} plot as an interactive {plotly} widget with a text alternative (alt) in HTML output, and returns the plot unchanged in other output formats.",
     "crumbs": [
       "Documentation",
       "News"
