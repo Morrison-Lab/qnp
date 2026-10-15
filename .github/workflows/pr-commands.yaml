@@ -21,7 +21,7 @@ jobs:
 
       - name: Configure git safe directory
         run: |
-          git config --global --add safe.directory /__w/rpt/rpt
+          git config --global --add safe.directory /__w/qnp/qnp
 
       - uses: r-lib/actions/pr-fetch@v2
         with:
@@ -65,7 +65,7 @@ jobs:
 
       - name: Configure git safe directory
         run: |
-          git config --global --add safe.directory /__w/rpt/rpt
+          git config --global --add safe.directory /__w/qnp/qnp
 
       - uses: r-lib/actions/pr-fetch@v2
         with:

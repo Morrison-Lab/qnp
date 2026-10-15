@@ -19,22 +19,32 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(rpt)
+library(qnp)
 ```
 
 {{< include macros/macros.qmd >}}
 
 ## Introduction
 
-This vignette provides an introduction to the `{rpt}` package.
+This vignette provides an introduction to the `{qnp}` package,
+which provides helpers for including plots in Quarto notes.
 
 ## Basic Usage
 
-Here's a basic example:
+`interactive_plot()` makes a `ggplot` interactive in HTML output
+and leaves it unchanged in other output formats.
+The `alt` argument gives a text alternative for screen readers:
 
 ```{r}
-# Example usage
-example_function(c(1, 2, 3, 4, 5))
+library(ggplot2)
+
+p <- ggplot(mtcars, aes(wt, mpg)) +
+  geom_point()
+
+interactive_plot(
+  plot = p,
+  alt = "Scatterplot of fuel economy versus car weight"
+)
 ```
 
 ## Next Steps

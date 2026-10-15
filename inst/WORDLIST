@@ -145,8 +145,6 @@ expt
 fdens
 fmass
 foldable
-foodweb
-foodwebr
 forall
 formatter
 frac
@@ -155,6 +153,7 @@ ga
 gb
 gd
 gg
+ggplot
 gl
 graphviz
 hCor
@@ -226,6 +225,7 @@ invsb
 iprod
 iprodf
 kerngaus
+knitr
 lVert
 lceil
 ldots
@@ -287,6 +287,7 @@ perp
 ph
 phaz
 pkgdown
+plotly
 pmass
 pmat
 pmatrix

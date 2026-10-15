@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(rpt)
+library(qnp)
 ```
 
 {{< include macros/macros.qmd >}}
@@ -48,9 +48,17 @@ Here's a basic example using the package:
 # Create some sample data
 sample_data <- c(1, 2, 3, 4, 5, 10, 15, 20)
 
-# Use the example function
-result <- example_function(sample_data)
-result
+# Plot it, interactively in HTML output
+p <- ggplot2::ggplot(
+  data.frame(index = seq_along(sample_data), value = sample_data),
+  ggplot2::aes(index, value)
+) +
+  ggplot2::geom_point()
+
+interactive_plot(
+  plot = p,
+  alt = "Scatterplot of the sample values by index"
+)
 ```
 
 ## Quarto Features
@@ -151,4 +159,4 @@ For more information, see:
 - [Quarto Documentation](https://quarto.org/)
 - [Using Quarto with R](https://quarto.org/docs/computations/r.html)
 - @R-base
-- @R-rpt
+- @R-qnp
