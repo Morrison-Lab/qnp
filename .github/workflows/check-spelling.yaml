@@ -1,0 +1,33 @@
+---
+name: Spellcheck
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    container:
+      image: rocker/verse:latest
+    name: Spellcheck
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::spelling
+          needs: check
+
+      - name: Run Spelling Check Test
+        uses: insightsengineering/r-spellcheck-action@v3.0.3
