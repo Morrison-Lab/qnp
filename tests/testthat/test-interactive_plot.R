@@ -49,4 +49,13 @@ test_that("interactive_plot() defaults is_html to knitr::is_html_output()", {
     interactive_plot(plot = p, alt = "Scatterplot"),
     p
   )
+
+  testthat::local_mocked_bindings(
+    is_html_output = function(...) TRUE,
+    .package = "knitr"
+  )
+  expect_s3_class(
+    interactive_plot(plot = p, alt = "Scatterplot"),
+    "shiny.tag"
+  )
 })
