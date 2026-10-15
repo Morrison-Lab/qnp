@@ -155,6 +155,7 @@ ga
 gb
 gd
 gg
+ggplot
 gl
 graphviz
 hCor
@@ -287,6 +288,7 @@ perp
 ph
 phaz
 pkgdown
+plotly
 pmass
 pmat
 pmatrix

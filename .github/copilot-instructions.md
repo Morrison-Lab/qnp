@@ -1,10 +1,10 @@
-# Copilot Instructions for R Package Template
+# Copilot Instructions for qnp
 
 ## Repository Overview
 
-This is a template repository for creating R packages following UCD-SERG standards.
+`{qnp}` ("quarto-notes plots") is an R package of helpers for including plots in Quarto notes, created from the `Morrison-Lab/rpt` package template.
 
-- **Type**: R package template
+- **Type**: R package
 - **Language**: R (>= 4.1.0)
 - **Key Dependencies**: See DESCRIPTION file
 
@@ -29,16 +29,6 @@ When the `skip-cp-setup` label is present:
 - The workflow will only checkout the repository code
 - All dependency installation steps will be skipped
 - Copilot can still install specific dependencies as needed during task execution
-
-#### When to Use This Template
-
-1. Clone or use this repository as a template
-2. Replace all instances of `packagename` with your actual package name
-3. Update DESCRIPTION, README.Rmd, and other files with your package details
-4. Add your R functions to `R/` directory
-5. Add tests to `tests/testthat/` directory
-6. Run `devtools::document()` to generate documentation
-7. Run `devtools::check()` to validate your package
 
 ## Development Workflow
 
@@ -75,7 +65,7 @@ lintr::lint_package()
 devtools::test()
 
 # Run specific test file
-devtools::test_file("tests/testthat/test-example_function.R")
+devtools::test_file("tests/testthat/test-interactive_plot.R")
 
 # Run tests with coverage
 covr::package_coverage()

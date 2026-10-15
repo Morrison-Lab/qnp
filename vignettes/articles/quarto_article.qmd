@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 #| message: false
-library(rpt)
+library(qnp)
 ```
 
 {{< include ../macros/macros.qmd >}}
@@ -195,15 +195,19 @@ hist(rnorm(100),
 
 ## Working with Package Functions
 
-Here's how to use the package's example function with different inputs:
+Here's how to use `interactive_plot()` with a different plot:
 
 ```{r}
-# Numeric vector
-example_function(c(5, 10, 15, 20, 25))
+p_line <- ggplot2::ggplot(
+  data.frame(index = 1:5, value = c(5, 10, 15, 20, 25)),
+  ggplot2::aes(index, value)
+) +
+  ggplot2::geom_line()
 
-# Using with generated data
-random_data <- runif(10, min = 0, max = 100)
-example_function(random_data)
+interactive_plot(
+  plot = p_line,
+  alt = "Line plot of five increasing values"
+)
 ```
 
 ## Theorem Environments
@@ -315,8 +319,8 @@ This article demonstrates the advanced capabilities of Quarto for creating rich,
 
 ## Learn More
 
-- Visit the [package website](https://ucd-serg.github.io/rpt/)
-- Check out the [GitHub repository](https://github.com/UCD-SERG/rpt)
+- Visit the [package website](https://morrison-lab.github.io/qnp/)
+- Check out the [GitHub repository](https://github.com/Morrison-Lab/qnp)
 - Read the [Quarto documentation](https://quarto.org/)
 
 ## References

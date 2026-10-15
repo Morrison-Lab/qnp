@@ -2,7 +2,7 @@
 # Morrison-Lab/gha reusable review workflow.
 #
 # Migrated from a bespoke anthropics/claude-code-action@v1 workflow (see #178)
-# so rpt inherits the upstream hardening automatically as @v2 slides:
+# so qnp inherits the upstream hardening automatically as @v2 slides:
 # stub-review retry, the is_error/verdict guard, prior-review-context dedup,
 # older-comment collapse, the cost comment, and gha#400's duplicate-review
 # fix. The reviewer stash/restore dance is handled inside the reusable

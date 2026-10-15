@@ -8,10 +8,9 @@ is a short orientation; defer to copilot-instructions.md for details.
 
 ## Project context
 
-This is a template repository for creating R packages following UCD-SERG
-standards. When you create a package from it, replace the placeholder package
-name, Title, and Description in `DESCRIPTION` (and the project context above)
-with your actual package details.
+`{qnp}` ("quarto-notes plots") is an R package of helpers for including plots
+in Quarto notes, created from the `Morrison-Lab/rpt` package template.
+Its exported function is `interactive_plot()` (`R/interactive_plot.R`).
 
 Authoritative style guide: [UCD-SERG Lab Manual](https://ucd-serg.github.io/lab-manual/)
 (source: <https://github.com/UCD-SERG/lab-manual>).

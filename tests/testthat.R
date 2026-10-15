@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(rpt)
+library(qnp)
 
-test_check("rpt")
+test_check("qnp")
