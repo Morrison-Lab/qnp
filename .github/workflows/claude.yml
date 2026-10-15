@@ -1,0 +1,83 @@
+# Thin caller of the canonical Morrison-Lab/gha @claude agent workflow,
+# adapted for rpt. Migrated from a bespoke anthropics/claude-code-action@v1
+# workflow (see #182; the review-workflow half was #181 / #178) so rpt's
+# @claude agent inherits upstream hardening automatically as @v2 slides:
+# the bot-actor self-trigger guard, late-comment polling, reviewer re-request
+# and review re-dispatch when Claude pushes commits, the cost comment, and
+# push-failure reporting.
+#
+# Deliberate changes from the pre-migration workflow (see #182):
+#   - Permissions escalate from the bespoke read-only set, because the reusable
+#     agent needs write access to do its job:
+#       * contents: read -> write  -- push branches, open PRs (was comment-only)
+#       * issues:   read -> write  -- post issue/PR comments (ack + response)
+#       * actions:  read -> write  -- dispatch the review workflow (gh workflow run)
+#       * id-token: write          -- unchanged
+#   - A trusted-author gate (OWNER/MEMBER/COLLABORATOR): the bespoke workflow
+#     had none, so this gate is what makes the write escalations safe. They are
+#     coupled -- write access without the author gate would be a hole.
+#   - Effective timeout 50 -> 60 min: a `uses:` reusable-workflow-call job cannot
+#     set timeout-minutes at the caller, so runtime is bounded by the reusable's
+#     own timeout-minutes: 60 (the lab standard). Same structural trade-off as
+#     claude-code-review.yml (#181); see copilot-instructions.md's Workflow Time
+#     Limits reusable-call exception.
+#
+# Secrets are passed explicitly (not `secrets: inherit`) to match the
+# canonical stub and stay robust. Requires the CLAUDE_CODE_OAUTH_TOKEN
+# repository secret; WORKFLOW_TOKEN is optional (only for editing
+# .github/workflows). See Morrison-Lab/gha examples/claude.yml for the
+# upstream stub.
+name: Claude Code
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  issues:
+    types: [opened, assigned]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  claude:
+    # Only invoke the reusable workflow when an @claude mention is present AND
+    # the author is trusted (OWNER/MEMBER/COLLABORATOR), so an untrusted
+    # commenter's mention doesn't spawn a run with elevated (write)
+    # permissions. The reusable workflow re-checks this as defense-in-depth.
+    if: |
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude') && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude') && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)) ||
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude') && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.review.author_association)) ||
+      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')) && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association))
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: write       # dispatch the review workflow via `gh workflow run`
+    uses: Morrison-Lab/gha/.github/workflows/claude.yml@v3
+    secrets:
+      CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+      WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}   # optional; for editing .github/workflows
+    with:
+      # rpt uses Quarto for its vignettes and website (VignetteBuilder: quarto,
+      # Config/Needs/website: quarto), so give the agent Quarto to render/check.
+      install-quarto: true
+      # setup-r (default true) and use-renv (default false) are left as-is:
+      # rpt CI restores dependencies from DESCRIPTION via setup-r-dependencies,
+      # not from the renv.lock, so DESCRIPTION-based restore matches CI.
+      prompt-addendum: |
+        This is an R package following UCD-SERG standards. Before committing:
+        - `devtools::document()` -- roxygen2 docs must be in sync
+          (R-check-docs.yml enforces this). Don't hand-edit NAMESPACE or man/.
+        - `lintr::lint_package()` -- `.lintr.R` is authoritative: snake_case
+          names, line length <= 80, no `T`/`F` for TRUE/FALSE, no `:::`
+          internal calls, tidyverse idioms, native `|>` pipe.
+        - `spelling::spell_check_package()`.
+        - `devtools::test()` -- cover new/changed behaviour with testthat; use
+          `set.seed()` so snapshots are deterministic.
+        - Add a `NEWS.md` bullet for any user-facing change (news.yaml enforces
+          this; a missing entry is a CI failure).
+        - `README.md` is generated from `README.Rmd`; edit the `.Rmd`.
+        - No new dependencies without a `DESCRIPTION` entry.
