@@ -1,0 +1,3 @@
+[submodule "vignettes/macros"]
+	path = vignettes/macros
+	url = https://github.com/d-morrison/macros.git
