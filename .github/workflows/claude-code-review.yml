@@ -1,0 +1,86 @@
+# Automatic Claude Code review of pull requests -- thin caller of the central
+# Morrison-Lab/gha reusable review workflow.
+#
+# Migrated from a bespoke anthropics/claude-code-action@v1 workflow (see #178)
+# so rpt inherits the upstream hardening automatically as @v2 slides:
+# stub-review retry, the is_error/verdict guard, prior-review-context dedup,
+# older-comment collapse, the cost comment, and gha#400's duplicate-review
+# fix. The reviewer stash/restore dance is handled inside the reusable
+# workflow too: all requested reviewers (human and AI, e.g. Copilot) are
+# cleared while Claude reviews and re-requested when it finishes, which
+# generalizes the d-morrison-only toggle this file used to carry.
+#
+# The reusable workflow runs in AGENT MODE (track-progress: false), so reviews
+# are summary-only: the upstream inline-comment tool is not initialized in
+# agent mode (anthropics/claude-code-action#635), and tag mode is not safe
+# until anthropics/claude-code-action#1415 (a read_only input) ships. Set
+# track-progress: true here once one of those lands to restore inline comments.
+#
+# Keep this file named claude-code-review.yml and keep the workflow_dispatch
+# pr_number input: claude.yml re-dispatches a review with
+# `gh workflow run claude-code-review.yml -f pr_number=<n>` after an @claude
+# run pushes commits. Requires the CLAUDE_CODE_OAUTH_TOKEN repository secret.
+# See Morrison-Lab/gha examples/claude-code-review.yml for the upstream stub.
+name: Claude Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review, reopened]
+  # Lets claude.yml re-dispatch a fresh review after an @claude run pushes
+  # commits (GITHUB_TOKEN pushes do not fire `synchronize`), and allows a
+  # manual re-review from the Actions UI.
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Pull request number to review'
+        required: true
+        # String, not number: the reusable workflow's `pr-number` input is a
+        # string and `gh workflow run -f` sends one.
+        type: string
+
+jobs:
+  review:
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read # lets the reviewer read CI status (github_ci MCP server)
+    uses: Morrison-Lab/gha/.github/workflows/claude-code-review.yml@v3
+    secrets:
+      CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+    with:
+      # Wire the workflow_dispatch input through so claude.yml can re-dispatch
+      # a review on Claude's commits; empty (and ignored) for pull_request runs.
+      pr-number: ${{ inputs.pr_number }}
+      # Accept the `claude` and github-actions[bot] actors so a review
+      # dispatched after an @claude run (or another CI push) is not rejected as
+      # "non-human". Matches the pre-migration workflow's allowed_bots.
+      allowed-bots: "github-actions[bot],claude"
+      prompt-addendum: |
+        This is an R package template following UCD-SERG standards, so in
+        addition to the standard checks also prioritize:
+
+        1. **R package correctness**
+           - Roxygen2 docs are in sync (`devtools::document()` is required
+             before committing; `R-check-docs.yml` enforces this).
+           - `NAMESPACE` and `man/` are not edited by hand.
+           - `README.md` is generated from `README.Rmd`; edits go there.
+
+        2. **R style** (`.lintr.R` is authoritative)
+           - snake_case names, line length <= 80 chars, no `T`/`F` for
+             TRUE/FALSE, no `:::`-style internal calls.
+           - Tidyverse idioms and native `|>` pipe.
+
+        3. **Testing**
+           - New/changed behaviour is covered by testthat.
+           - Random outputs use `set.seed()` so snapshots are deterministic.
+
+        4. **Changelog**
+           - Every user-facing change has a `NEWS.md` bullet
+             (`news.yaml` enforces this; a missing entry is a CI failure).
+
+        5. **CI hygiene**
+           - No new dependencies without a `DESCRIPTION` entry.
+           - Spell-check / lint failures are fixed at the source,
+             not suppressed.

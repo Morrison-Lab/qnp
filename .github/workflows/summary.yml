@@ -1,0 +1,15 @@
+# Summarize newly opened issues, via the reusable workflow in
+# Morrison-Lab/gha rather than a repo-local copy (#74).
+name: Summarize new issues
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  summary:
+    permissions:
+      issues: write
+      models: read
+      contents: read
+    uses: Morrison-Lab/gha/.github/workflows/summary.yml@v2
