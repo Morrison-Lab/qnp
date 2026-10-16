@@ -1,10 +1,9 @@
-# qnp 1.0.2.9006
+# qnp 0.0.0.9000
 
+* Reset the version to 0.0.0.9000.
+  The package template's inherited 1.0.2.x version was never a release of `{qnp}`.
 * `interactive_plot()` now errors if `alt` is missing, empty, or not a single string,
   in every output format, so a figure cannot ship without alt text.
-
-# qnp 1.0.2.9005
-
 * Created `{qnp}` ("quarto-notes plots") from the
   [`Morrison-Lab/rpt`](https://github.com/Morrison-Lab/rpt) package template.
 * Added `interactive_plot()`,
