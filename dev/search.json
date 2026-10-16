@@ -370,7 +370,7 @@
     "href": "vignettes/articles/quarto_article.html",
     "title": "Advanced Quarto Article",
     "section": "",
-    "text": "UC Davis Seroepidemiology Research Group (UCD-SERG)\n\n2026-10-15\nCodelibrary(qnp)",
+    "text": "UC Davis Seroepidemiology Research Group (UCD-SERG)\n\n2026-10-16\nCodelibrary(qnp)",
     "crumbs": [
       "Documentation",
       "Articles",
@@ -685,7 +685,7 @@
     "href": "CITATION.html",
     "title": "Citation",
     "section": "",
-    "text": "Citation\nTo cite package ‘qnp’ in publications use:\n\nMorrison D (2026). qnp: Plots for Quarto Notes. R package version 1.0.2.9006, https://github.com/Morrison-Lab/qnp.",
+    "text": "Citation\nTo cite package ‘qnp’ in publications use:\n\nMorrison D (2026). qnp: Plots for Quarto Notes. R package version 0.0.0.9000, https://github.com/Morrison-Lab/qnp.",
     "crumbs": [
       "Documentation",
       "Citation"
@@ -738,9 +738,9 @@
   {
     "objectID": "NEWS.html",
     "href": "NEWS.html",
-    "title": "qnp 1.0.2.9006",
+    "title": "qnp 0.0.0.9000",
     "section": "",
-    "text": "qnp 1.0.2.9006\n\ninteractive_plot() now errors if alt is missing, empty, or not a single string, in every output format, so a figure cannot ship without alt text.\n\n\n\nqnp 1.0.2.9005\n\nCreated {qnp} (“quarto-notes plots”) from the Morrison-Lab/rpt package template.\nAdded interactive_plot(), which renders a {ggplot2} plot as an interactive {plotly} widget with a text alternative (alt) in HTML output, and returns the plot unchanged in other output formats.",
+    "text": "qnp 0.0.0.9000\n\nReset the version to 0.0.0.9000. The package template’s inherited 1.0.2.x version was never a release of {qnp}.\ninteractive_plot() now errors if alt is missing, empty, or not a single string, in every output format, so a figure cannot ship without alt text.\nCreated {qnp} (“quarto-notes plots”) from the Morrison-Lab/rpt package template.\nAdded interactive_plot(), which renders a {ggplot2} plot as an interactive {plotly} widget with a text alternative (alt) in HTML output, and returns the plot unchanged in other output formats.",
     "crumbs": [
       "Documentation",
       "News"

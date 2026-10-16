@@ -31,7 +31,7 @@ website:
     right:
       - text: Versions
         menu:
-          - text: "1.0.2.9006 (dev)"
+          - text: "0.0.0.9000 (dev)"
             href: https://Morrison-Lab.github.io/qnp/dev/
       - icon: github
         href: $ALTDOC_PACKAGE_URL_GITHUB
