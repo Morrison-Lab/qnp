@@ -9,8 +9,10 @@ interactive_plot(plot, alt, is_html = knitr::is_html_output())
 \arguments{
 \item{plot}{A \link[ggplot2:ggplot]{ggplot2} plot object.}
 
-\item{alt}{A string giving the text alternative (alt text) for the plot.
-Only used in HTML output.}
+\item{alt}{A single, non-empty string giving the text alternative (alt text)
+for the plot.
+Required, so that a missing alt text is caught in every output format.
+It only appears in the output in HTML format.}
 
 \item{is_html}{Whether the current output format is HTML.
 Defaults to \code{\link[knitr:is_html_output]{knitr::is_html_output()}},

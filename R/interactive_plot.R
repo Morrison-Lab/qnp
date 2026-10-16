@@ -16,8 +16,10 @@
 #' @param plot
 #' A [ggplot2][ggplot2::ggplot] plot object.
 #' @param alt
-#' A string giving the text alternative (alt text) for the plot.
-#' Only used in HTML output.
+#' A single, non-empty string giving the text alternative (alt text)
+#' for the plot.
+#' Required, so that a missing alt text is caught in every output format.
+#' It only appears in the output in HTML format.
 #' @param is_html
 #' Whether the current output format is HTML.
 #' Defaults to [knitr::is_html_output()],
@@ -53,6 +55,8 @@ interactive_plot <- function(
   alt,
   is_html = knitr::is_html_output()
 ) {
+  .validate_alt(alt)
+
   if (!is_html) {
     return(plot)
   }
@@ -69,4 +73,30 @@ interactive_plot <- function(
     `aria-label` = alt,
     widget
   )
+}
+
+#' Check that `alt` is a single, non-empty string
+#'
+#' @param alt The value to check.
+#' @param call The environment of the calling function, for error messages.
+#' @return `alt`, invisibly.
+#' @noRd
+.validate_alt <- function(alt, call = parent.frame()) {
+  valid <-
+    is.character(alt) &&
+    length(alt) == 1 &&
+    !is.na(alt) &&
+    nzchar(trimws(alt))
+
+  if (!valid) {
+    cli::cli_abort(
+      c(
+        "{.arg alt} must be a single, non-empty string.",
+        i = "Screen readers announce it as the text alternative for the plot."
+      ),
+      call = call
+    )
+  }
+
+  invisible(alt)
 }

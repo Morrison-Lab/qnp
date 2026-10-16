@@ -6,3 +6,6 @@
   which renders a `{ggplot2}` plot as an interactive `{plotly}` widget
   with a text alternative (`alt`) in HTML output,
   and returns the plot unchanged in other output formats.
+* `interactive_plot()` now requires `alt` to be a single, non-empty string
+  in every output format,
+  so that missing alt text is caught early rather than silently dropped.
