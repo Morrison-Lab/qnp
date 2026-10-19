@@ -1,6 +1,6 @@
 Package: qnp
 Title: Plots for Quarto Notes
-Version: 0.0.0.9001
+Version: 0.0.0.9002
 Authors@R: c(
     person("Douglas Ezra", "Morrison", , "ezra.morrison@wwu.edu", role = c("aut", "cre"))
   )

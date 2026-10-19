@@ -30,6 +30,7 @@
 ^vignettes/articles$
 ^vignettes/macros/\.git
 ^vignettes/macros/\.github
+^vignettes/macros/\.claude
 ^index\.qmd$
 ^\.Rprofile$
 ^_extensions$

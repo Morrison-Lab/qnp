@@ -1,4 +1,6 @@
-# qnp 0.0.0.9001
+# qnp 0.0.0.9002
+
+* `R CMD check` no longer reports the `vignettes/macros/.claude` directory of the `macros` submodule as a hidden directory.
 
 * The documentation check no longer fails when a newer `roxygen2` only rewrites
   the `Config/roxygen2/version` or `RoxygenNote` field in `DESCRIPTION`.
