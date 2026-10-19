@@ -33,7 +33,12 @@ jobs:
       - name: Check for changed files
         run: |
           git add --all
-          changes=$(git diff-index HEAD --name-only -- man/ NAMESPACE DESCRIPTION)
+          changes=$(git diff-index HEAD --name-only -- man/ NAMESPACE)
+          # A newer roxygen2 rewrites only the recorded version fields.
+          # Ignore those two lines, and still fail on any other DESCRIPTION change.
+          if ! git diff --cached --quiet -I'^(Config/roxygen2/version|RoxygenNote):' HEAD -- DESCRIPTION; then
+            changes="$changes DESCRIPTION"
+          fi
           if [ -n "$changes" ]; then
             echo "Changes found after documenting."
             git --no-pager diff
