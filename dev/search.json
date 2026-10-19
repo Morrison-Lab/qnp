@@ -685,7 +685,7 @@
     "href": "CITATION.html",
     "title": "Citation",
     "section": "",
-    "text": "Citation\nTo cite package ‘qnp’ in publications use:\n\nMorrison D (2026). qnp: Plots for Quarto Notes. R package version 0.0.0.9001, https://github.com/Morrison-Lab/qnp.",
+    "text": "Citation\nTo cite package ‘qnp’ in publications use:\n\nMorrison D (2026). qnp: Plots for Quarto Notes. R package version 0.0.0.9002, https://github.com/Morrison-Lab/qnp.",
     "crumbs": [
       "Documentation",
       "Citation"
@@ -738,9 +738,9 @@
   {
     "objectID": "NEWS.html",
     "href": "NEWS.html",
-    "title": "qnp 0.0.0.9001",
+    "title": "qnp 0.0.0.9002",
     "section": "",
-    "text": "qnp 0.0.0.9001\n\nThe documentation check no longer fails when a newer roxygen2 only rewrites the Config/roxygen2/version or RoxygenNote field in DESCRIPTION. It still fails on any other change to DESCRIPTION, NAMESPACE, or man/.\nReset the version to 0.0.0.9000. The package template’s inherited 1.0.2.x version was never a release of {qnp}.\ninteractive_plot() now errors if alt is missing, empty, or not a single string, in every output format, so a figure cannot ship without alt text.\nCreated {qnp} (“quarto-notes plots”) from the Morrison-Lab/rpt package template.\nAdded interactive_plot(), which renders a {ggplot2} plot as an interactive {plotly} widget with a text alternative (alt) in HTML output, and returns the plot unchanged in other output formats.",
+    "text": "qnp 0.0.0.9002\n\nR CMD check no longer reports the vignettes/macros/.claude directory of the macros submodule as a hidden directory.\nThe documentation check no longer fails when a newer roxygen2 only rewrites the Config/roxygen2/version or RoxygenNote field in DESCRIPTION. It still fails on any other change to DESCRIPTION, NAMESPACE, or man/.\nReset the version to 0.0.0.9000. The package template’s inherited 1.0.2.x version was never a release of {qnp}.\ninteractive_plot() now errors if alt is missing, empty, or not a single string, in every output format, so a figure cannot ship without alt text.\nCreated {qnp} (“quarto-notes plots”) from the Morrison-Lab/rpt package template.\nAdded interactive_plot(), which renders a {ggplot2} plot as an interactive {plotly} widget with a text alternative (alt) in HTML output, and returns the plot unchanged in other output formats.",
     "crumbs": [
       "Documentation",
       "News"
