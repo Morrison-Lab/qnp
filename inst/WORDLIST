@@ -13,10 +13,10 @@ Cov
 Covf
 Covs
 Covt
+DOCX
 Dependabot
 Devn
 DiagrammeR
-DOCX
 EInf
 Ef
 Ep
@@ -33,14 +33,15 @@ MathJax
 ModResid
 ModResidual
 NegBin
+Okabe
 Pois
 Prf
 README
 Resid
 RevealJS
 SDf
-SEf
 SERG
+SEf
 StdResid
 StdResidual
 Submodule
@@ -78,6 +79,8 @@ cirad
 ciradf
 ciradsym
 codebases
+colour
+colours
 covh
 covhf
 cuhaz
@@ -156,6 +159,7 @@ gg
 ggplot
 gl
 graphviz
+grey
 hCor
 hCorf
 hCors
@@ -264,8 +268,8 @@ medf
 modresid
 modresidual
 mselr
-mx
 multiversion
+mx
 navbar
 ndist
 nolimits
