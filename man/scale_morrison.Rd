@@ -14,24 +14,34 @@ scale_color_morrison(...)
 scale_fill_morrison(...)
 }
 \arguments{
-\item{...}{Passed to \code{\link[ggokabeito:scale_colour_okabe_ito]{ggokabeito::scale_colour_okabe_ito()}}
-or \code{\link[ggokabeito:scale_fill_okabe_ito]{ggokabeito::scale_fill_okabe_ito()}}.}
+\item{...}{Passed to \code{\link[ggplot2:discrete_scale]{ggplot2::discrete_scale()}},
+such as \code{name}, \code{limits} or \code{labels}.
+The \code{palette} and the aesthetic are fixed.}
 }
 \value{
 A discrete \link[ggplot2:Scale]{ggplot2::Scale} object.
 }
 \description{
 Discrete \link[ggplot2:ggplot]{ggplot2} colour and fill scales
-using the Okabe-Ito palette,
-which stays distinguishable under the common kinds of colour blindness.
-They call \code{\link[ggokabeito:scale_colour_okabe_ito]{ggokabeito::scale_colour_okabe_ito()}}
-and \code{\link[ggokabeito:scale_fill_okabe_ito]{ggokabeito::scale_fill_okabe_ito()}}
-with the order blue, vermillion, bluish green, reddish purple,
+that stay distinguishable under the common kinds of colour blindness.
+For up to 7 groups they use the Okabe-Ito palette
+(\code{\link[ggokabeito:palette_okabe_ito]{ggokabeito::palette_okabe_ito()}})
+in the order blue, vermillion, bluish green, reddish purple,
 sky blue, orange, yellow.
 Blue and vermillion lead because lds uses them for two-group figures.
-The scales leave out black and grey,
-which look like text and missing values,
-so they have 7 colours.
+The palette leaves out black and grey,
+which look like text and missing values.
+}
+\details{
+For 8 to 11 groups the scales switch to the \code{"Safe"} palette
+of the \code{rcartocolor} package, without its grey, and warn,
+because no tested palette keeps every pair of that many colours
+easy to tell apart.
+All colours change at that point, including those of the first 7 groups.
+Also vary shape or line type for that many groups.
+More than 11 groups is an error.
+The reasons for these choices are in the
+\href{https://github.com/Morrison-Lab/qnp/blob/main/inst/decisions/0001-colour-palette.md}{decision record}.
 }
 \examples{
 \dontshow{if (requireNamespace("ggplot2", quietly = TRUE)) withAutoprint(\{ # examplesIf}

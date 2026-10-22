@@ -1,3 +1,14 @@
+# qnp 0.0.0.9005
+
+* `scale_colour_morrison()` and `scale_fill_morrison()` now accept 8 to 11 groups,
+  using the `rcartocolor` `"Safe"` palette without its grey, with a warning that colour alone does not separate that many groups.
+  All colours change at the switch from 7 to 8 groups.
+  More than 11 groups is an error.
+  The scales now pass `...` to `ggplot2::discrete_scale()` instead of to the `ggokabeito` scales,
+  so `alpha` is no longer accepted (#13).
+  The decision and the colorblind comparison behind it are in the
+  [decision record](https://github.com/Morrison-Lab/qnp/blob/main/inst/decisions/0001-colour-palette.md).
+
 # qnp 0.0.0.9004
 
 * `scale_colour_morrison()` and `scale_fill_morrison()` now call the `ggokabeito` package's Okabe-Ito scales instead of using a typed-out vector of colours. The colours and their order do not change (#11).
