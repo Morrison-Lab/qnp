@@ -1,6 +1,6 @@
 # qnp 0.0.0.9006
 
-* The README links the decision to keep `{qnp}` separate from the notes sites.
+* The README links the decision to keep `{qnp}` separate from the notes sites (#14).
 
 # qnp 0.0.0.9005
 
