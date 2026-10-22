@@ -21,18 +21,13 @@
 #'   scale_colour_morrison()
 NULL
 
-# Okabe-Ito order: orange, sky blue, bluish green, yellow, blue,
-# vermillion, reddish purple. Blue and vermillion lead because
+# `palette.colors()` lists Okabe-Ito as black, orange, sky blue,
+# bluish green, yellow, blue, vermillion, reddish purple.
+# Drop black, and put blue and vermillion first because
 # lds already uses them for two-group figures.
-morrison_colours <- c(
-  blue = "#0072B2",
-  vermillion = "#D55E00",
-  bluish_green = "#009E73",
-  reddish_purple = "#CC79A7",
-  sky_blue = "#56B4E9",
-  orange = "#E69F00",
-  yellow = "#F0E442"
-)
+morrison_colours <- grDevices::palette.colors(8, palette = "Okabe-Ito")[
+  c(6, 7, 4, 8, 3, 2, 5)
+]
 
 #' @rdname scale_morrison
 #' @export

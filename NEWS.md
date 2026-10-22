@@ -1,3 +1,7 @@
+# qnp 0.0.0.9004
+
+* `scale_colour_morrison()` and `scale_fill_morrison()` now take their colours from `grDevices::palette.colors()` instead of a typed-out vector. The colours and their order do not change (#11).
+
 # qnp 0.0.0.9003
 
 * New `theme_morrison()`, `scale_colour_morrison()` and `scale_fill_morrison()`:
