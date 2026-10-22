@@ -1,3 +1,7 @@
+# qnp 0.0.0.9006
+
+* The README links the decision to keep `{qnp}` separate from the notes sites.
+
 # qnp 0.0.0.9005
 
 * `scale_colour_morrison()` and `scale_fill_morrison()` now accept 8 to 11 groups,
