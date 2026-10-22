@@ -6,6 +6,8 @@
 
 - [interactive_plot()](https://morrison-lab.github.io/qnp/man/interactive_plot.html): Make a plot interactive in HTML output
 - [qnp-package](https://morrison-lab.github.io/qnp/man/qnp-package.html): qnp: Plots for Quarto Notes
+- [scale_morrison()](https://morrison-lab.github.io/qnp/man/scale_morrison.html): Morrison Lab colour scales
+- [theme_morrison()](https://morrison-lab.github.io/qnp/man/theme_morrison.html): Morrison Lab ggplot2 theme
 
 ## Articles
 
