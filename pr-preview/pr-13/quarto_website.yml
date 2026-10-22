@@ -30,7 +30,7 @@ website:
     right:
       - text: Versions
         menu:
-          - text: "0.0.0.9003 (dev)"
+          - text: "0.0.0.9004 (dev)"
             href: https://Morrison-Lab.github.io/qnp/dev/
       - icon: github
         href: https://github.com/Morrison-Lab/qnp/pull/13
