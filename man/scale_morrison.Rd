@@ -22,8 +22,7 @@ A discrete \link[ggplot2:Scale]{ggplot2::Scale} object.
 \description{
 Discrete \link[ggplot2:ggplot]{ggplot2} colour and fill scales
 using the Okabe-Ito palette,
-which stays distinguishable under the common kinds of colour blindness
-.
+which stays distinguishable under the common kinds of colour blindness.
 The colours are those of \code{\link[grDevices:palette.colors]{grDevices::palette.colors()}}
 with \code{palette = "Okabe-Ito"},
 without black and grey, which look like text and missing values.

@@ -2,8 +2,7 @@
 #'
 #' Discrete [ggplot2][ggplot2::ggplot] colour and fill scales
 #' using the Okabe-Ito palette,
-#' which stays distinguishable under the common kinds of colour blindness
-#'.
+#' which stays distinguishable under the common kinds of colour blindness.
 #' The colours are those of [grDevices::palette.colors()]
 #' with `palette = "Okabe-Ito"`,
 #' without black and grey, which look like text and missing values.
