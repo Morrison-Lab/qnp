@@ -14,7 +14,8 @@ scale_color_morrison(...)
 scale_fill_morrison(...)
 }
 \arguments{
-\item{...}{Passed to \code{\link[ggplot2:discrete_scale]{ggplot2::discrete_scale()}}.}
+\item{...}{Passed to \code{\link[ggokabeito:scale_colour_okabe_ito]{ggokabeito::scale_colour_okabe_ito()}}
+or \code{\link[ggokabeito:scale_fill_okabe_ito]{ggokabeito::scale_fill_okabe_ito()}}.}
 }
 \value{
 A discrete \link[ggplot2:Scale]{ggplot2::Scale} object.
@@ -23,9 +24,14 @@ A discrete \link[ggplot2:Scale]{ggplot2::Scale} object.
 Discrete \link[ggplot2:ggplot]{ggplot2} colour and fill scales
 using the Okabe-Ito palette,
 which stays distinguishable under the common kinds of colour blindness.
-The colours are those of \code{\link[grDevices:palette.colors]{grDevices::palette.colors()}}
-with \code{palette = "Okabe-Ito"},
-without black and grey, which look like text and missing values.
+They call \code{\link[ggokabeito:scale_colour_okabe_ito]{ggokabeito::scale_colour_okabe_ito()}}
+and \code{\link[ggokabeito:scale_fill_okabe_ito]{ggokabeito::scale_fill_okabe_ito()}}
+with the order blue, vermillion, bluish green, reddish purple,
+sky blue, orange, yellow.
+Blue and vermillion lead because lds uses them for two-group figures.
+The scales leave out black and grey,
+which look like text and missing values,
+so they have 7 colours.
 }
 \examples{
 \dontshow{if (requireNamespace("ggplot2", quietly = TRUE)) withAutoprint(\{ # examplesIf}

@@ -18,6 +18,7 @@ Depends:
     R (>= 4.1.0)
 Imports:
     cli,
+    ggokabeito,
     ggplot2,
     htmltools,
     knitr,

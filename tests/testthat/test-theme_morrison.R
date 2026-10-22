@@ -20,8 +20,16 @@ test_that("theme_morrison() background follows the palette", {
 test_that("scale_colour_morrison() gives Okabe-Ito colours in order", {
   skip_if_not_installed("ggplot2")
 
-  expect_identical(morrison_palette(2), c("#0072B2", "#D55E00"))
-  expect_error(morrison_palette(8), "7 colours")
+  scale <- scale_colour_morrison()
+
+  expect_identical(
+    unname(scale$palette(7)),
+    c(
+      "#0072B2", "#D55E00", "#009E73", "#CC79A7",
+      "#56B4E9", "#E69F00", "#F0E442"
+    )
+  )
+  expect_error(scale$palette(8), "7 provided")
 })
 
 test_that("the Morrison scales and theme build a plot", {

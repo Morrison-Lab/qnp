@@ -1,6 +1,6 @@
 # qnp 0.0.0.9004
 
-* `scale_colour_morrison()` and `scale_fill_morrison()` now take their colours from `grDevices::palette.colors()` instead of a typed-out vector. The colours and their order do not change (#11).
+* `scale_colour_morrison()` and `scale_fill_morrison()` now call the `ggokabeito` package's Okabe-Ito scales instead of using a typed-out vector of colours. The colours and their order do not change (#11).
 
 # qnp 0.0.0.9003
 

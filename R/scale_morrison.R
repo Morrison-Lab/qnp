@@ -3,12 +3,18 @@
 #' Discrete [ggplot2][ggplot2::ggplot] colour and fill scales
 #' using the Okabe-Ito palette,
 #' which stays distinguishable under the common kinds of colour blindness.
-#' The colours are those of [grDevices::palette.colors()]
-#' with `palette = "Okabe-Ito"`,
-#' without black and grey, which look like text and missing values.
+#' They call [ggokabeito::scale_colour_okabe_ito()]
+#' and [ggokabeito::scale_fill_okabe_ito()]
+#' with the order blue, vermillion, bluish green, reddish purple,
+#' sky blue, orange, yellow.
+#' Blue and vermillion lead because lds uses them for two-group figures.
+#' The scales leave out black and grey,
+#' which look like text and missing values,
+#' so they have 7 colours.
 #'
 #' @param ...
-#' Passed to [ggplot2::discrete_scale()].
+#' Passed to [ggokabeito::scale_colour_okabe_ito()]
+#' or [ggokabeito::scale_fill_okabe_ito()].
 #'
 #' @return
 #' A discrete [ggplot2::Scale] object.
@@ -21,22 +27,14 @@
 #'   scale_colour_morrison()
 NULL
 
-# `palette.colors()` lists Okabe-Ito as black, orange, sky blue,
-# bluish green, yellow, blue, vermillion, reddish purple.
-# Drop black, and put blue and vermillion first because
-# lds already uses them for two-group figures.
-morrison_colours <- grDevices::palette.colors(8, palette = "Okabe-Ito")[
-  c(6, 7, 4, 8, 3, 2, 5)
-]
+# Positions in ggokabeito's order: orange, sky blue, bluish green, yellow,
+# blue, vermillion, reddish purple.
+morrison_order <- c(5, 6, 3, 7, 2, 1, 4)
 
 #' @rdname scale_morrison
 #' @export
 scale_colour_morrison <- function(...) {
-  ggplot2::discrete_scale(
-    aesthetics = "colour",
-    palette = morrison_palette,
-    ...
-  )
+  ggokabeito::scale_colour_okabe_ito(order = morrison_order, ...)
 }
 
 #' @rdname scale_morrison
@@ -46,18 +44,5 @@ scale_color_morrison <- scale_colour_morrison
 #' @rdname scale_morrison
 #' @export
 scale_fill_morrison <- function(...) {
-  ggplot2::discrete_scale(
-    aesthetics = "fill",
-    palette = morrison_palette,
-    ...
-  )
-}
-
-morrison_palette <- function(n) {
-  if (n > length(morrison_colours)) {
-    cli::cli_abort(
-      "The Morrison palette has {length(morrison_colours)} colours, not {n}."
-    )
-  }
-  unname(morrison_colours[seq_len(n)])
+  ggokabeito::scale_fill_okabe_ito(order = morrison_order, ...)
 }
