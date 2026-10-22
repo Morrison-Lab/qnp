@@ -5,7 +5,7 @@
   All colours change at the switch from 7 to 8 groups.
   More than 11 groups is an error.
   The scales now pass `...` to `ggplot2::discrete_scale()` instead of to the `ggokabeito` scales,
-  so `alpha`, `darken` and `order` are no longer accepted (#13).
+  so `alpha` is no longer accepted (#13).
   The decision and the colorblind comparison behind it are in the
   [decision record](https://github.com/Morrison-Lab/qnp/blob/main/inst/decisions/0001-colour-palette.md).
 

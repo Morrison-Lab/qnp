@@ -1,4 +1,4 @@
-# nolint start: the decision record URL is longer than 80 characters
+# nolint start: line_length_linter.
 #' Morrison Lab colour scales
 #'
 #' Discrete [ggplot2][ggplot2::ggplot] colour and fill scales

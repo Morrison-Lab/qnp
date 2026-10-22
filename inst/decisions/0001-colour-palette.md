@@ -20,7 +20,7 @@ Decided by Ezra Morrison, who asked for one shared ggplot2 look for the lab's no
 The test is `colorblindcheck::palette_check()`.
 It reports the smallest distance between two colours under simulated colour vision deficiency.
 A distance of about 10 or more is easy to tell apart.
-The computed comparison is the table in the [Choosing Colors chapter of the visualization notes](https://morrison-lab.github.io/vds/chapters/colors.html).
+The scores below come from the table in the Choosing Colors chapter of the visualization notes, added in [vds#16](https://github.com/Morrison-Lab/vds/pull/16).
 
 - **Okabe-Ito** scores 12.1 at 3 and 5 groups and 11.1 at 7 groups.
 - **RColorBrewer** `Dark2` and `Set2` score well at 3 groups and 1.6 to 3.4 at 5 groups, so they fail beyond 3 groups.
