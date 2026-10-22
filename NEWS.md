@@ -1,4 +1,8 @@
-# qnp 0.0.0.9002
+# qnp 0.0.0.9003
+
+* New `theme_morrison()`, `scale_colour_morrison()` and `scale_fill_morrison()`:
+  a ggplot2 theme (from the rme notes, with the sites' page colours)
+  and an Okabe-Ito colorblind-safe palette shared by the notes sites (#9).
 
 * `R CMD check` no longer reports the `vignettes/macros/.claude` directory of the `macros` submodule as a hidden directory.
 

@@ -1,6 +1,6 @@
 Package: qnp
 Title: Plots for Quarto Notes
-Version: 0.0.0.9002
+Version: 0.0.0.9003
 Authors@R: c(
     person("Douglas Ezra", "Morrison", , "ezra.morrison@wwu.edu", role = c("aut", "cre"))
   )
@@ -18,14 +18,15 @@ Depends:
     R (>= 4.1.0)
 Imports:
     cli,
+    ggplot2,
     htmltools,
     knitr,
-    plotly
-Suggests: 
+    plotly,
+    rlang
+Suggests:
     altdoc,
     badger,
     bslib,
-    ggplot2,
     quarto,
     rmarkdown,
     spelling,
