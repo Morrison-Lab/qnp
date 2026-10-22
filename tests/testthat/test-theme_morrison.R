@@ -37,8 +37,35 @@ test_that("scale_colour_morrison() falls back to Safe with a warning", {
   scale <- scale_colour_morrison()
 
   expect_warning(colours <- scale$palette(8), "More than 7 groups")
-  expect_identical(colours, rcartocolor::carto_pal(8, "Safe"))
-  expect_error(suppressWarnings(scale$palette(13)), "at most 12")
+  expect_identical(colours, rcartocolor::carto_pal(12, "Safe")[1:8])
+  expect_error(scale$palette(12), "at most 11")
+})
+
+test_that("the Morrison palette never contains the missing-value grey", {
+  skip_if_not_installed("ggplot2")
+
+  scale <- scale_fill_morrison()
+
+  expect_length(scale$palette(7), 7)
+  expect_no_warning(scale$palette(7))
+  colours <- suppressWarnings(scale$palette(11))
+  expect_length(colours, 11)
+  expect_false("#888888" %in% colours)
+  expect_error(scale$palette(0), "positive whole number")
+  expect_error(scale$palette(7.5), "positive whole number")
+})
+
+test_that("a plot with 9 groups warns once and builds", {
+  skip_if_not_installed("ggplot2")
+
+  p <- ggplot2::ggplot(
+    data.frame(x = 1:9, y = 1:9, g = factor(1:9)),
+    ggplot2::aes(x, y, colour = g)
+  ) +
+    ggplot2::geom_point() +
+    scale_colour_morrison(name = "Group")
+
+  expect_warning(ggplot2::ggplot_build(p), "More than 7 groups")
 })
 
 test_that("the Morrison scales and theme build a plot", {

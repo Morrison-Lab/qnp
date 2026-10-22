@@ -8,8 +8,10 @@ Decided by Ezra Morrison, who asked for one shared ggplot2 look for the lab's no
 - `scale_colour_morrison()` and `scale_fill_morrison()` use the Okabe-Ito palette from the `ggokabeito` package for up to 7 groups.
   The order is blue, vermillion, bluish green, reddish purple, sky blue, orange, yellow.
   Black and grey are left out because they look like text and missing values.
-- For 8 to 12 groups the scales use the `"Safe"` palette of the `rcartocolor` package and warn that colour alone does not separate that many groups.
-  More than 12 groups is an error.
+- For 8 to 11 groups the scales use the `"Safe"` palette of the `rcartocolor` package, without its grey, and warn that colour alone does not separate that many groups.
+  Grey is dropped because it looks like ggplot2's default colour for missing values.
+  All colours change at the switch, including those of the first 7 groups.
+  More than 11 groups is an error.
 - Pair colour with shape or line type whenever a figure has more than 3 or 4 groups.
   This rule is in [Principles of Scientific Writing](https://morrison-lab.github.io/psw/).
 
@@ -26,7 +28,7 @@ The computed comparison is the table in the [Choosing Colors chapter of the visu
 - **khroma** `muted` has at most 9 colours.
   Its Okabe-Ito scheme starts with black.
 - **viridis** is a sequential palette, so neighbouring colours look alike when the groups have no order.
-- **rcartocolor** `Safe` scores about 5 to 6 at every size up to 12, so it is a fallback and not a recommendation.
+- **rcartocolor** `Safe` scores about 5 to 6 at every size up to 12 (with its grey), so it is a fallback and not a recommendation.
   The `fxtas` package already uses it for up to 12 biomarker groups.
 - **Base R** `palette.colors()` gives the same Okabe-Ito colours as `ggokabeito`.
   It was rejected because the lab prefers a maintained package with ggplot2 scales over base R.
