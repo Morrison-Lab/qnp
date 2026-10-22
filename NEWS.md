@@ -1,3 +1,10 @@
+# qnp 0.0.0.9005
+
+* `scale_colour_morrison()` and `scale_fill_morrison()` now accept 8 to 12 groups,
+  using the `rcartocolor` `"Safe"` palette with a warning that colour alone does not separate that many groups.
+  More than 12 groups is an error.
+  The decision and the colourblind comparison behind it are in `inst/decisions/0001-colour-palette.md`.
+
 # qnp 0.0.0.9004
 
 * `scale_colour_morrison()` and `scale_fill_morrison()` now call the `ggokabeito` package's Okabe-Ito scales instead of using a typed-out vector of colours. The colours and their order do not change (#11).

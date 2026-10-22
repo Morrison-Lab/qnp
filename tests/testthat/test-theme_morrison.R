@@ -29,7 +29,16 @@ test_that("scale_colour_morrison() gives Okabe-Ito colours in order", {
       "#56B4E9", "#E69F00", "#F0E442"
     )
   )
-  expect_error(scale$palette(8), "7 provided")
+})
+
+test_that("scale_colour_morrison() falls back to Safe with a warning", {
+  skip_if_not_installed("ggplot2")
+
+  scale <- scale_colour_morrison()
+
+  expect_warning(colours <- scale$palette(8), "More than 7 groups")
+  expect_identical(colours, rcartocolor::carto_pal(8, "Safe"))
+  expect_error(suppressWarnings(scale$palette(13)), "at most 12")
 })
 
 test_that("the Morrison scales and theme build a plot", {
