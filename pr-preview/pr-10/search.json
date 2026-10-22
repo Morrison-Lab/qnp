@@ -513,7 +513,7 @@
     "href": "man/scale_morrison.html",
     "title": "qnp",
     "section": "",
-    "text": "Discrete ggplot2 colour and fill scales using the Okabe-Ito palette, which stays distinguishable under the common kinds of colour blindness . The colours are those of grDevices::palette.colors() with palette = “Okabe-Ito”, without black and grey, which look like text and missing values.\n\nscale_colour_morrison(...)\n\nscale_color_morrison(...)\n\nscale_fill_morrison(...)\n\n\n\n\n…\n\n\nPassed to ggplot2::discrete_scale().\n\n\nA discrete ggplot2::Scale object.\n\n\nCodelibrary(\"qnp\")\n\n\nggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg, colour = factor(cyl))) +\n  ggplot2::geom_point() +\n  scale_colour_morrison()",
+    "text": "Discrete ggplot2 colour and fill scales using the Okabe-Ito palette, which stays distinguishable under the common kinds of colour blindness. The colours are those of grDevices::palette.colors() with palette = “Okabe-Ito”, without black and grey, which look like text and missing values.\n\nscale_colour_morrison(...)\n\nscale_color_morrison(...)\n\nscale_fill_morrison(...)\n\n\n\n\n…\n\n\nPassed to ggplot2::discrete_scale().\n\n\nA discrete ggplot2::Scale object.\n\n\nCodelibrary(\"qnp\")\n\n\nggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg, colour = factor(cyl))) +\n  ggplot2::geom_point() +\n  scale_colour_morrison()",
     "crumbs": [
       "Documentation",
       "Reference",
@@ -525,7 +525,7 @@
     "href": "man/scale_morrison.html#morrison-lab-colour-scales",
     "title": "qnp",
     "section": "",
-    "text": "Discrete ggplot2 colour and fill scales using the Okabe-Ito palette, which stays distinguishable under the common kinds of colour blindness . The colours are those of grDevices::palette.colors() with palette = “Okabe-Ito”, without black and grey, which look like text and missing values.\n\nscale_colour_morrison(...)\n\nscale_color_morrison(...)\n\nscale_fill_morrison(...)\n\n\n\n\n…\n\n\nPassed to ggplot2::discrete_scale().\n\n\nA discrete ggplot2::Scale object.\n\n\nCodelibrary(\"qnp\")\n\n\nggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg, colour = factor(cyl))) +\n  ggplot2::geom_point() +\n  scale_colour_morrison()",
+    "text": "Discrete ggplot2 colour and fill scales using the Okabe-Ito palette, which stays distinguishable under the common kinds of colour blindness. The colours are those of grDevices::palette.colors() with palette = “Okabe-Ito”, without black and grey, which look like text and missing values.\n\nscale_colour_morrison(...)\n\nscale_color_morrison(...)\n\nscale_fill_morrison(...)\n\n\n\n\n…\n\n\nPassed to ggplot2::discrete_scale().\n\n\nA discrete ggplot2::Scale object.\n\n\nCodelibrary(\"qnp\")\n\n\nggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg, colour = factor(cyl))) +\n  ggplot2::geom_point() +\n  scale_colour_morrison()",
     "crumbs": [
       "Documentation",
       "Reference",
@@ -733,7 +733,7 @@
     "href": "CITATION.html",
     "title": "Citation",
     "section": "",
-    "text": "Citation\nTo cite package ‘qnp’ in publications use:\n\nMorrison D (2026). qnp: Plots for Quarto Notes. R package version 0.0.0.9002, https://github.com/Morrison-Lab/qnp.",
+    "text": "Citation\nTo cite package ‘qnp’ in publications use:\n\nMorrison D (2026). qnp: Plots for Quarto Notes. R package version 0.0.0.9003, https://github.com/Morrison-Lab/qnp.",
     "crumbs": [
       "Documentation",
       "Citation"
@@ -786,9 +786,9 @@
   {
     "objectID": "NEWS.html",
     "href": "NEWS.html",
-    "title": "qnp 0.0.0.9002",
+    "title": "qnp 0.0.0.9003",
     "section": "",
-    "text": "qnp 0.0.0.9002\n\nNew theme_morrison(), scale_colour_morrison() and scale_fill_morrison(): a ggplot2 theme (from the rme notes, with the sites’ page colours) and an Okabe-Ito colorblind-safe palette shared by the notes sites (#9).\nR CMD check no longer reports the vignettes/macros/.claude directory of the macros submodule as a hidden directory.\nThe documentation check no longer fails when a newer roxygen2 only rewrites the Config/roxygen2/version or RoxygenNote field in DESCRIPTION. It still fails on any other change to DESCRIPTION, NAMESPACE, or man/.\nReset the version to 0.0.0.9000. The package template’s inherited 1.0.2.x version was never a release of {qnp}.\ninteractive_plot() now errors if alt is missing, empty, or not a single string, in every output format, so a figure cannot ship without alt text.\nCreated {qnp} (“quarto-notes plots”) from the Morrison-Lab/rpt package template.\nAdded interactive_plot(), which renders a {ggplot2} plot as an interactive {plotly} widget with a text alternative (alt) in HTML output, and returns the plot unchanged in other output formats.",
+    "text": "qnp 0.0.0.9003\n\nNew theme_morrison(), scale_colour_morrison() and scale_fill_morrison(): a ggplot2 theme (from the rme notes, with the sites’ page colours) and an Okabe-Ito colorblind-safe palette shared by the notes sites (#9).\nR CMD check no longer reports the vignettes/macros/.claude directory of the macros submodule as a hidden directory.\nThe documentation check no longer fails when a newer roxygen2 only rewrites the Config/roxygen2/version or RoxygenNote field in DESCRIPTION. It still fails on any other change to DESCRIPTION, NAMESPACE, or man/.\nReset the version to 0.0.0.9000. The package template’s inherited 1.0.2.x version was never a release of {qnp}.\ninteractive_plot() now errors if alt is missing, empty, or not a single string, in every output format, so a figure cannot ship without alt text.\nCreated {qnp} (“quarto-notes plots”) from the Morrison-Lab/rpt package template.\nAdded interactive_plot(), which renders a {ggplot2} plot as an interactive {plotly} widget with a text alternative (alt) in HTML output, and returns the plot unchanged in other output formats.",
     "crumbs": [
       "Documentation",
       "News"
