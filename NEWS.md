@@ -1,4 +1,4 @@
-# qnp 0.0.0.9002
+# qnp 0.0.0.9003
 
 * New `theme_morrison()`, `scale_colour_morrison()` and `scale_fill_morrison()`:
   a ggplot2 theme (from the rme notes, with the sites' page colours)
