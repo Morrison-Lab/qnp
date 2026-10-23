@@ -84,6 +84,15 @@ altdoc::preview_docs()
 The documentation is automatically built and deployed to GitHub Pages
 via GitHub Actions when changes are pushed to the main branch.
 
+## Why a separate repository
+
+`{qnp}` is an R package, and the notes sites that use it are Quarto
+websites, so the two live in separate repositories. The decision and its
+reasons are in the lab’s [repository-template
+guidance](https://github.com/Morrison-Lab/ai-config/blob/main/shared/workflow/repo-templates.md#keep-an-r-package-and-a-notes-site-in-separate-repositories).
+The notes on choosing colors are in the [visualization
+notes](https://morrison-lab.github.io/vds/).
+
 ## Code of Conduct
 
 Please note that the `{qnp}` project is released with a [Contributor
