@@ -370,7 +370,7 @@
     "href": "vignettes/articles/quarto_article.html",
     "title": "Advanced Quarto Article",
     "section": "",
-    "text": "UC Davis Seroepidemiology Research Group (UCD-SERG)\n\n2026-10-22\nCodelibrary(qnp)",
+    "text": "UC Davis Seroepidemiology Research Group (UCD-SERG)\n\n2026-10-23\nCodelibrary(qnp)",
     "crumbs": [
       "Documentation",
       "Articles",
@@ -561,7 +561,7 @@
     "href": "index.html",
     "title": "{qnp}",
     "section": "",
-    "text": "The goal of {qnp} (“quarto-notes plots”) is to provide helpers for including plots in Quarto notes. It currently provides one function, interactive_plot(), which makes a {ggplot2} plot interactive in HTML output and leaves it unchanged in other output formats.\n\n\nYou can install the development version of {qnp} from GitHub with:\n# install.packages(\"pak\")\npak::pak(\"Morrison-Lab/qnp\")\n\n\n\ninteractive_plot() takes a ggplot and a text alternative (alt) for the plot:\nlibrary(ggplot2)\nlibrary(qnp)\n\np &lt;- ggplot(mtcars, aes(wt, mpg)) +\n  geom_point()\n\ninteractive_plot(\n  plot = p,\n  alt = \"Scatterplot of fuel economy versus car weight\",\n  is_html = FALSE\n)\n\nIn HTML output (the default, via is_html = knitr::is_html_output()), the result is an interactive plotly widget wrapped in a &lt;div&gt; with role = \"img\" and aria-label = alt, so that screen readers announce it as a single image. In other output formats, the original ggplot is returned unchanged. This README is rendered to GitHub-flavored Markdown, which knitr counts as an HTML output format, so the example sets is_html = FALSE explicitly to show the static plot.\nSee USAGE.md for more details.\n\n\n\n\n\nThis package uses altdoc with Quarto to build its documentation site. To build and preview the documentation locally:\n# Load the package\npkgload::load_all()\n\n# Render the documentation\naltdoc::render_docs()\n\n# Preview the site\naltdoc::preview_docs()\nThe documentation is automatically built and deployed to GitHub Pages via GitHub Actions when changes are pushed to the main branch.\n\n\n\n\nPlease note that the {qnp} project is released with a Contributor Code of Conduct. By contributing to this project, you agree to abide by its terms.",
+    "text": "The goal of {qnp} (“quarto-notes plots”) is to provide helpers for including plots in Quarto notes. It currently provides one function, interactive_plot(), which makes a {ggplot2} plot interactive in HTML output and leaves it unchanged in other output formats.\n\n\nYou can install the development version of {qnp} from GitHub with:\n# install.packages(\"pak\")\npak::pak(\"Morrison-Lab/qnp\")\n\n\n\ninteractive_plot() takes a ggplot and a text alternative (alt) for the plot:\nlibrary(ggplot2)\nlibrary(qnp)\n\np &lt;- ggplot(mtcars, aes(wt, mpg)) +\n  geom_point()\n\ninteractive_plot(\n  plot = p,\n  alt = \"Scatterplot of fuel economy versus car weight\",\n  is_html = FALSE\n)\n\nIn HTML output (the default, via is_html = knitr::is_html_output()), the result is an interactive plotly widget wrapped in a &lt;div&gt; with role = \"img\" and aria-label = alt, so that screen readers announce it as a single image. In other output formats, the original ggplot is returned unchanged. This README is rendered to GitHub-flavored Markdown, which knitr counts as an HTML output format, so the example sets is_html = FALSE explicitly to show the static plot.\nSee USAGE.md for more details.\n\n\n\n\n\nThis package uses altdoc with Quarto to build its documentation site. To build and preview the documentation locally:\n# Load the package\npkgload::load_all()\n\n# Render the documentation\naltdoc::render_docs()\n\n# Preview the site\naltdoc::preview_docs()\nThe documentation is automatically built and deployed to GitHub Pages via GitHub Actions when changes are pushed to the main branch.\n\n\n\n\n{qnp} is an R package, and the notes sites that use it are Quarto websites, so the two live in separate repositories. The decision and its reasons are in the lab’s repository-template guidance. The notes on choosing colors are in the visualization notes.\n\n\n\nPlease note that the {qnp} project is released with a Contributor Code of Conduct. By contributing to this project, you agree to abide by its terms.",
     "crumbs": [
       "Documentation",
       "Home"
@@ -595,6 +595,17 @@
     "title": "{qnp}",
     "section": "",
     "text": "This package uses altdoc with Quarto to build its documentation site. To build and preview the documentation locally:\n# Load the package\npkgload::load_all()\n\n# Render the documentation\naltdoc::render_docs()\n\n# Preview the site\naltdoc::preview_docs()\nThe documentation is automatically built and deployed to GitHub Pages via GitHub Actions when changes are pushed to the main branch.",
+    "crumbs": [
+      "Documentation",
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#why-a-separate-repository",
+    "href": "index.html#why-a-separate-repository",
+    "title": "{qnp}",
+    "section": "",
+    "text": "{qnp} is an R package, and the notes sites that use it are Quarto websites, so the two live in separate repositories. The decision and its reasons are in the lab’s repository-template guidance. The notes on choosing colors are in the visualization notes.",
     "crumbs": [
       "Documentation",
       "Home"
@@ -733,7 +744,7 @@
     "href": "CITATION.html",
     "title": "Citation",
     "section": "",
-    "text": "Citation\nTo cite package ‘qnp’ in publications use:\n\nMorrison D (2026). qnp: Plots for Quarto Notes. R package version 0.0.0.9005, https://github.com/Morrison-Lab/qnp.",
+    "text": "Citation\nTo cite package ‘qnp’ in publications use:\n\nMorrison D (2026). qnp: Plots for Quarto Notes. R package version 0.0.0.9006, https://github.com/Morrison-Lab/qnp.",
     "crumbs": [
       "Documentation",
       "Citation"
@@ -786,9 +797,9 @@
   {
     "objectID": "NEWS.html",
     "href": "NEWS.html",
-    "title": "qnp 0.0.0.9005",
+    "title": "qnp 0.0.0.9006",
     "section": "",
-    "text": "qnp 0.0.0.9005\n\nscale_colour_morrison() and scale_fill_morrison() now accept 8 to 11 groups, using the rcartocolor \"Safe\" palette without its grey, with a warning that colour alone does not separate that many groups. All colours change at the switch from 7 to 8 groups. More than 11 groups is an error. The scales now pass ... to ggplot2::discrete_scale() instead of to the ggokabeito scales, so alpha is no longer accepted (#13). The decision and the colorblind comparison behind it are in the decision record.\n\n\n\nqnp 0.0.0.9004\n\nscale_colour_morrison() and scale_fill_morrison() now call the ggokabeito package’s Okabe-Ito scales instead of using a typed-out vector of colours. The colours and their order do not change (#11).\n\n\n\nqnp 0.0.0.9003\n\nNew theme_morrison(), scale_colour_morrison() and scale_fill_morrison(): a ggplot2 theme (from the rme notes, with the sites’ page colours) and an Okabe-Ito colorblind-safe palette shared by the notes sites (#9).\nR CMD check no longer reports the vignettes/macros/.claude directory of the macros submodule as a hidden directory.\nThe documentation check no longer fails when a newer roxygen2 only rewrites the Config/roxygen2/version or RoxygenNote field in DESCRIPTION. It still fails on any other change to DESCRIPTION, NAMESPACE, or man/.\nReset the version to 0.0.0.9000. The package template’s inherited 1.0.2.x version was never a release of {qnp}.\ninteractive_plot() now errors if alt is missing, empty, or not a single string, in every output format, so a figure cannot ship without alt text.\nCreated {qnp} (“quarto-notes plots”) from the Morrison-Lab/rpt package template.\nAdded interactive_plot(), which renders a {ggplot2} plot as an interactive {plotly} widget with a text alternative (alt) in HTML output, and returns the plot unchanged in other output formats.",
+    "text": "qnp 0.0.0.9006\n\nThe README links the decision to keep {qnp} separate from the notes sites (#14).\n\n\n\nqnp 0.0.0.9005\n\nscale_colour_morrison() and scale_fill_morrison() now accept 8 to 11 groups, using the rcartocolor \"Safe\" palette without its grey, with a warning that colour alone does not separate that many groups. All colours change at the switch from 7 to 8 groups. More than 11 groups is an error. The scales now pass ... to ggplot2::discrete_scale() instead of to the ggokabeito scales, so alpha is no longer accepted (#13). The decision and the colorblind comparison behind it are in the decision record.\n\n\n\nqnp 0.0.0.9004\n\nscale_colour_morrison() and scale_fill_morrison() now call the ggokabeito package’s Okabe-Ito scales instead of using a typed-out vector of colours. The colours and their order do not change (#11).\n\n\n\nqnp 0.0.0.9003\n\nNew theme_morrison(), scale_colour_morrison() and scale_fill_morrison(): a ggplot2 theme (from the rme notes, with the sites’ page colours) and an Okabe-Ito colorblind-safe palette shared by the notes sites (#9).\nR CMD check no longer reports the vignettes/macros/.claude directory of the macros submodule as a hidden directory.\nThe documentation check no longer fails when a newer roxygen2 only rewrites the Config/roxygen2/version or RoxygenNote field in DESCRIPTION. It still fails on any other change to DESCRIPTION, NAMESPACE, or man/.\nReset the version to 0.0.0.9000. The package template’s inherited 1.0.2.x version was never a release of {qnp}.\ninteractive_plot() now errors if alt is missing, empty, or not a single string, in every output format, so a figure cannot ship without alt text.\nCreated {qnp} (“quarto-notes plots”) from the Morrison-Lab/rpt package template.\nAdded interactive_plot(), which renders a {ggplot2} plot as an interactive {plotly} widget with a text alternative (alt) in HTML output, and returns the plot unchanged in other output formats.",
     "crumbs": [
       "Documentation",
       "News"
