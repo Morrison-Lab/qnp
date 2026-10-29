@@ -1,0 +1,36 @@
+# qnp
+
+> Plots for Quarto Notes
+
+## Reference
+
+- [interactive_plot()](https://morrison-lab.github.io/qnp/man/interactive_plot.html): Make a plot interactive in HTML output
+- [qnp-package](https://morrison-lab.github.io/qnp/man/qnp-package.html): qnp: Plots for Quarto Notes
+- [scale_morrison()](https://morrison-lab.github.io/qnp/man/scale_morrison.html): Morrison Lab colour scales
+- [theme_morrison()](https://morrison-lab.github.io/qnp/man/theme_morrison.html): Morrison Lab ggplot2 theme
+
+## Articles
+
+- [Generate sample data](https://morrison-lab.github.io/qnp/vignettes/articles/quarto_article.html)
+- [Getting-Started](https://morrison-lab.github.io/qnp/vignettes/getting-started.html)
+- [AGENTS](https://morrison-lab.github.io/qnp/vignettes/macros/AGENTS.html)
+- [CLAUDE](https://morrison-lab.github.io/qnp/vignettes/macros/CLAUDE.html)
+- [CONTRIBUTING](https://morrison-lab.github.io/qnp/vignettes/macros/CONTRIBUTING.html)
+- [README](https://morrison-lab.github.io/qnp/vignettes/macros/README.html)
+- [Distribution-Models](https://morrison-lab.github.io/qnp/vignettes/macros/_tests/distribution-models.html)
+- [Fform-Exponent](https://morrison-lab.github.io/qnp/vignettes/macros/_tests/fform-exponent.html)
+- [Kl-Surprisal-Check](https://morrison-lab.github.io/qnp/vignettes/macros/_tests/kl-surprisal-check.html)
+- [Pdf-Include-in-Header](https://morrison-lab.github.io/qnp/vignettes/macros/_tests/pdf-include-in-header.html)
+- [Pdf-Shortcode](https://morrison-lab.github.io/qnp/vignettes/macros/_tests/pdf-shortcode.html)
+- [README](https://morrison-lab.github.io/qnp/vignettes/macros/citations/README.html)
+- [Register the macros with pandoc's static math parser (texmath).](https://morrison-lab.github.io/qnp/vignettes/macros/demo-include-in-header.html)
+- [Demo-Shortcode](https://morrison-lab.github.io/qnp/vignettes/macros/demo-shortcode.html)
+- [0001-macros-submodule-versioning](https://morrison-lab.github.io/qnp/vignettes/macros/docs/adr/0001-macros-submodule-versioning.html)
+- [README](https://morrison-lab.github.io/qnp/vignettes/macros/docs/adr/README.html)
+- [Index](https://morrison-lab.github.io/qnp/vignettes/macros/index.html)
+- [Embed macro definitions in a hidden Quarto fenced-div so pandoc processes](https://morrison-lab.github.io/qnp/vignettes/macros/macros-table.html)
+- [Macros](https://morrison-lab.github.io/qnp/vignettes/macros/macros.html)
+- [Sources {#sec-notation-sources}](https://morrison-lab.github.io/qnp/vignettes/macros/notation-across-sources.html)
+- [Notation-Choices](https://morrison-lab.github.io/qnp/vignettes/macros/notation-choices.html)
+- [Create some sample data](https://morrison-lab.github.io/qnp/vignettes/quarto_vignette.html)
+
